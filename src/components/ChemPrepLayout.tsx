@@ -11,7 +11,7 @@ import {
   SidebarFooter,
   SidebarInset,
   SidebarRail,
-  SidebarSeparator, // Import SidebarSeparator
+  SidebarSeparator, 
 } from '@/components/ui/sidebar';
 import { Button } from '@/components/ui/button';
 import { Github } from 'lucide-react';
@@ -38,8 +38,6 @@ const AppContent = () => {
   const { open, toggleSidebar, isMobile } = useSidebar();
 
   React.useEffect(() => {
-    // Ensure selectedClassId and selectedLectureId are updated if defaultClasses change
-    // and the current selection is no longer valid or to select the first item by default.
     if (defaultClasses.length > 0) {
       const firstClass = defaultClasses[0];
       if (!selectedClassId || !defaultClasses.find(c => c.id === selectedClassId)) {
@@ -60,7 +58,7 @@ const AppContent = () => {
         }
       }
     }
-  }, []); // Run once on mount, or if defaultClasses could change dynamically, add it to dependencies.
+  }, []); 
 
 
   const selectedClass = React.useMemo(
@@ -76,12 +74,11 @@ const AppContent = () => {
   const handleSelectLecture = (classId: string, lectureId: string) => {
     setSelectedClassId(classId);
     setSelectedLectureId(lectureId);
-    if (isMobile && open) { // Check if sidebar is open before toggling
+    if (isMobile && open) { 
         toggleSidebar(); 
     }
   };
   
-  // Effect to select the first lecture of the first class if no selection is made after data loads
   React.useEffect(() => {
     if (defaultClasses.length > 0 && !selectedClassId && !selectedLectureId) {
       const firstClass = defaultClasses[0];
@@ -114,10 +111,7 @@ const AppContent = () => {
           />
         </SidebarContent>
         <SidebarSeparator />
-        <div className="p-2"> {/* Wrapper for ExternalResources in sidebar */}
-          <ExternalResources />
-        </div>
-        <SidebarSeparator />
+        {/* ExternalResources removed from here */}
         <SidebarFooter className="p-3">
             <Button variant="ghost" className="w-full justify-start gap-2" asChild>
                 <a href="https://github.com/firebase/genkit/tree/main/studio" target="_blank" rel="noopener noreferrer">
@@ -135,6 +129,7 @@ const AppContent = () => {
             <SidebarTrigger className="md:hidden" /> 
         </div>
         <ClassViewer selectedLecture={selectedLecture || null} />
+        <ExternalResources /> 
         <StudyTool selectedLecture={selectedLecture || null} selectedClass={selectedClass || null} />
          <footer className="text-center py-4 text-sm text-muted-foreground">
           © {new Date().getFullYear()} ChemPrep HQ. All rights reserved.
