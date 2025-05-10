@@ -14,13 +14,14 @@ import {
   SidebarSeparator, 
 } from '@/components/ui/sidebar';
 import { Button } from '@/components/ui/button';
-import { Github } from 'lucide-react';
+import { Github, List } from 'lucide-react';
+import { Accordion, AccordionContent, AccordionItem, AccordionTrigger } from '@/components/ui/accordion';
 
 import { Logo } from '@/components/icons/Logo';
 import { ClassList } from '@/components/ClassList';
 import { ClassViewer } from '@/components/ClassViewer';
 import { StudyTool } from '@/components/StudyTool';
-import { ExternalResources } from '@/components/ExternalResources';
+// ExternalResources import removed
 
 import { classes as defaultClasses } from '@/lib/data';
 import type { Class, Lecture } from '@/types';
@@ -92,26 +93,38 @@ const AppContent = () => {
 
   return (
     <>
-      <Sidebar collapsible="icon" variant="sidebar" defaultOpen={getInitialSidebarOpen()} onOpenChange={(isOpen) => {
-        if (typeof window !== 'undefined') {
-          localStorage.setItem('sidebarOpen', JSON.stringify(isOpen));
-        }
-      }}>
+      <Sidebar 
+        collapsible="icon" 
+        variant="sidebar" 
+        defaultOpen={getInitialSidebarOpen()} 
+        onOpenChange={(isOpen) => {
+          if (typeof window !== 'undefined') {
+            localStorage.setItem('sidebarOpen', JSON.stringify(isOpen));
+          }
+        }}
+        side="right" // Sidebar on the right for desktop
+      >
         <SidebarHeader className="h-16 flex items-center justify-between p-3">
           <Logo />
           <SidebarTrigger className="md:hidden" /> 
         </SidebarHeader>
         <SidebarSeparator />
         <SidebarContent className="flex-grow overflow-y-auto">
-          <ClassList
-            classes={defaultClasses}
-            selectedClassId={selectedClassId}
-            selectedLectureId={selectedLectureId}
-            onSelectLecture={handleSelectLecture}
-          />
+          {!isMobile && ( // ClassList in sidebar only on desktop
+            <ClassList
+              classes={defaultClasses}
+              selectedClassId={selectedClassId}
+              selectedLectureId={selectedLectureId}
+              onSelectLecture={handleSelectLecture}
+            />
+          )}
+          {isMobile && ( // On mobile, sidebar (sheet) might just have logo and github, classlist is in main content
+            <div className="p-4 text-center text-sm text-muted-foreground">
+              Navigation
+            </div>
+          )}
         </SidebarContent>
         <SidebarSeparator />
-        {/* ExternalResources removed from here */}
         <SidebarFooter className="p-3">
             <Button variant="ghost" className="w-full justify-start gap-2" asChild>
                 <a href="https://github.com/firebase/genkit/tree/main/studio" target="_blank" rel="noopener noreferrer">
@@ -125,12 +138,32 @@ const AppContent = () => {
         <SidebarRail />
       </Sidebar>
       <SidebarInset className="flex flex-col p-4 md:p-6 gap-6 bg-background">
-        <div className="flex items-center justify-between md:justify-end">
+        <div className="flex items-center justify-between md:justify-start"> {/* Changed to justify-start for desktop when sidebar is right */}
             <SidebarTrigger className="md:hidden" /> 
         </div>
         <ClassViewer selectedLecture={selectedLecture || null} />
-        <ExternalResources /> 
+        {/* ExternalResources removed */}
         <StudyTool selectedLecture={selectedLecture || null} selectedClass={selectedClass || null} />
+        {isMobile && ( // ClassList as accordion item on mobile, below StudyTool
+            <Accordion type="single" collapsible className="w-full md:hidden">
+              <AccordionItem value="class-list-mobile">
+                <AccordionTrigger className="text-lg hover:no-underline">
+                  <div className="flex items-center gap-2">
+                    <List className="h-5 w-5 text-primary" />
+                    Class List
+                  </div>
+                </AccordionTrigger>
+                <AccordionContent>
+                  <ClassList
+                    classes={defaultClasses}
+                    selectedClassId={selectedClassId}
+                    selectedLectureId={selectedLectureId}
+                    onSelectLecture={handleSelectLecture}
+                  />
+                </AccordionContent>
+              </AccordionItem>
+            </Accordion>
+          )}
          <footer className="text-center py-4 text-sm text-muted-foreground">
           © {new Date().getFullYear()} ChemPrep HQ. All rights reserved.
         </footer>
@@ -147,3 +180,4 @@ export function ChemPrepLayout() {
     </SidebarProvider>
   );
 }
+

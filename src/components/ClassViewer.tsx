@@ -28,7 +28,7 @@ export function ClassViewer({ selectedLecture }: ClassViewerProps) {
             className="rounded-md mb-4 shadow-md"
             data-ai-hint="chemistry lab"
           />
-          <p className="text-lg">Select a class and lecture from the sidebar to begin.</p>
+          <p className="text-lg">Select a class and lecture to begin.</p>
           <p className="text-sm text-muted-foreground mt-2">
             Explore interactive lessons, generate study plans, and ace your chemistry exams!
           </p>
@@ -77,21 +77,14 @@ export function ClassViewer({ selectedLecture }: ClassViewerProps) {
               {selectedLecture.pdfUrl ? (
                 <>
                   <Button asChild variant="outline" className="mb-3">
-                    <a href={selectedLecture.pdfUrl} target="_blank" rel="noopener noreferrer">
+                    <a href={selectedLecture.pdfUrl} download target="_blank" rel="noopener noreferrer">
                       <Download className="mr-2 h-4 w-4" />
                       Download PDF
                     </a>
                   </Button>
-                  <div className="aspect-[4/3] rounded-md overflow-hidden border border-border shadow-inner">
-                    <iframe
-                      src={selectedLecture.pdfUrl}
-                      width="100%"
-                      height="100%"
-                      title={`${selectedLecture.name} PDF Viewer`}
-                    >
-                      Your browser does not support PDFs. Please download the PDF to view it.
-                    </iframe>
-                  </div>
+                  <p className="text-sm text-muted-foreground">
+                    PDF preview has been removed. Please download the PDF to view it.
+                  </p>
                 </>
               ) : (
                 <div className="flex items-center justify-center h-full bg-muted p-4 rounded-md">
@@ -105,3 +98,4 @@ export function ClassViewer({ selectedLecture }: ClassViewerProps) {
     </Card>
   );
 }
+
