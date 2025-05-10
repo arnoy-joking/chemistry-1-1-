@@ -1,8 +1,5 @@
 
-import type { Class } from '@/types';
-import { Atom, Beaker, TestTube, ClipboardList, NotebookText, Sparkles } from 'lucide-react';
-
-const lectureData = [
+const lectureDataRaw = [
   { name: "Course Roadmap", vid: "RUQcm3vIbWo", npdf: "20240527-1716748184-LRH05IsN.pdf", clid: "13761", category: "Foundation & Basics" },
   { name: "Basic Building Class(BBC)-01", vid: "CLrwwQj697Q", npdf: "20240529-1716937235-9lpGk0ak.pdf", clid: "13785", category: "Foundation & Basics" },
   { name: "Basic Building Class(BBC)-02", vid: "P-dkM5_I1VU", npdf: "20240601-1717261772-VB8HeJSt.pdf", clid: "13818", category: "Foundation & Basics" },
@@ -41,7 +38,7 @@ const lectureData = [
   { name: "মৌলের পর্যায়বৃত্ত ধর্ম - পর্ব ০২", vid: "oOQbjtrr25E", npdf: "20241021-1729448026-DzYyBwik.pdf", clid: "15379", category: "Periodic Properties" },
   { name: "মৌলের পর্যায়বৃত্ত ধর্ম - পর্ব ০৩", vid: "ngDqOXN0R4s", npdf: "20241025-1729803130-20uc1n5X.pdf", clid: "15419", category: "Periodic Properties" },
   { name: "মৌলের পর্যায়বৃত্ত ধর্ম - পর্ব ৪.১", vid: "8nr8Zb-CHg0", npdf: "20241028-1730055866-HOhrfiFb.pdf", clid: "15462", category: "Periodic Properties" },
-  { name: "মৌলের পর্যায়বৃত্ত ধর্ম - পর্ব ৪.২", vid: "f8nwirkZ58Q", npdf: "20241028-1730055866-HOhrfiFb.pdf", clid: "15463", category: "Periodic Properties" }, // Note: Same PDF as 4.1
+  { name: "মৌলের পর্যায়বৃত্ত ধর্ম - পর্ব ৪.২", vid: "f8nwirkZ58Q", npdf: "20241028-1730055866-HOhrfiFb.pdf", clid: "15463", category: "Periodic Properties" },
   { name: "মৌরের পর্যায়বৃত্ত ধর্ম - পর্ব ০৫", vid: "wzl4yRT4s7k", npdf: "20241104-1730659936-nC1vGD15.pdf", clid: "15547", category: "Periodic Properties" },
   { name: "মৌলের পর্যায়বৃত্ত ধর্ম - পর্ব ০৬", vid: "kR-tyH4bEHY", npdf: "20241110-1731196619-mwTxJJZ6.pdf", clid: "15856", category: "Periodic Properties" },
   { name: "মৌলের পর্যায়বৃত্ত ধর্ম - পর্ব ৬.২", vid: "a29pwQu2Tts", npdf: "20241113-1731440552-L8ktpKzN.pdf", clid: "15878", category: "Periodic Properties" },
@@ -100,63 +97,59 @@ const lectureData = [
   { name: "Special Live Session - Lecture 01", vid: "XzLM7iIOoos", npdf: "20250202-1738434734-hCzAvXWq.pdf", clid: "17003", category: "Special Lectures" },
 ];
 
-const classCategories = {
+const classCategoriesConfig = {
   "Foundation & Basics": {
     id: "hsc-chem-foundation",
     name: "HSC Chemistry - Foundation",
     description: "Fundamental concepts and basic building blocks for HSC Chemistry.",
-    Icon: ClipboardList,
     lectures: [],
   },
   "Qualitative Chemistry": {
     id: "hsc-chem-qualitative",
     name: "HSC Chemistry - গুণগত রসায়ন",
     description: "Covers topics related to qualitative analysis, solubility, and atomic structure details.",
-    Icon: Beaker,
     lectures: [],
   },
   "Periodic Properties": {
     id: "hsc-chem-periodic",
     name: "HSC Chemistry - মৌলের পর্যায়বৃত্ত ধর্ম",
     description: "Study of periodic trends and properties of elements in the periodic table.",
-    Icon: Atom,
     lectures: [],
   },
   "Chemical Change": {
     id: "hsc-chem-chemical-change",
     name: "HSC Chemistry - রাসায়নিক পরিবর্তন",
     description: "Explores chemical kinetics, equilibrium, acids-bases, and electrochemistry.",
-    Icon: TestTube,
     lectures: [],
   },
   "Applied Chemistry": {
     id: "hsc-chem-applied",
     name: "HSC Chemistry - কর্মমুখী রসায়ন",
     description: "Focuses on the practical applications of chemistry in daily life and industry.",
-    Icon: NotebookText,
     lectures: [],
   },
   "Special Lectures": {
     id: "hsc-chem-special",
     name: "HSC Chemistry - Special Lectures",
     description: "Special topics, problem-solving sessions, and advanced discussions.",
-    Icon: Sparkles,
     lectures: [],
   },
 };
 
-lectureData.forEach(lec => {
-  const categoryKey = lec.category as keyof typeof classCategories;
-  if (classCategories[categoryKey]) {
-    classCategories[categoryKey].lectures.push({
+lectureDataRaw.forEach(lec => {
+  const categoryKey = lec.category;
+  if (classCategoriesConfig[categoryKey]) {
+    classCategoriesConfig[categoryKey].lectures.push({
       id: lec.clid,
       name: lec.name.replace(/&amp;/g, '&'),
       videoUrl: `https://www.youtube.com/embed/${lec.vid}`,
       pdfUrl: lec.npdf ? `https://www.bondipathshala.com.bd/pdf/${lec.npdf}` : "",
-      notes: "", // No notes provided in the HTML
-      transcript: "", // No transcript provided in the HTML
-    } as never); // Added 'as never' to satisfy TypeScript for now, review if lecture structure changes.
+      // For static version, notes and transcript would typically be fetched or pre-filled if available.
+      // Here, they are kept empty as in the original data structure for simplicity.
+      notes: `Notes for ${lec.name}. These would be the actual lecture notes.`, 
+      transcript: `Transcript for ${lec.name}. This would be the video transcript.`,
+    });
   }
 });
 
-export const classes: Class[] = Object.values(classCategories);
+const classes = Object.values(classCategoriesConfig);
