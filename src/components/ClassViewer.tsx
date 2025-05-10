@@ -1,9 +1,11 @@
+
 "use client";
 
 import type { Lecture } from '@/types';
 import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
 import { Accordion, AccordionContent, AccordionItem, AccordionTrigger } from '@/components/ui/accordion';
-import { FileText, Video } from 'lucide-react';
+import { Button } from '@/components/ui/button';
+import { FileText, Video, Download } from 'lucide-react';
 import Image from 'next/image';
 
 interface ClassViewerProps {
@@ -72,22 +74,30 @@ export function ClassViewer({ selectedLecture }: ClassViewerProps) {
               </div>
             </AccordionTrigger>
             <AccordionContent>
-              <div className="aspect-[4/3] rounded-md overflow-hidden border border-border shadow-inner">
-                {selectedLecture.pdfUrl ? (
-                   <iframe
-                    src={selectedLecture.pdfUrl}
-                    width="100%"
-                    height="100%"
-                    title={`${selectedLecture.name} PDF Viewer`}
-                  >
-                    Your browser does not support PDFs. Please download the PDF to view it.
-                  </iframe>
-                ) : (
-                  <div className="flex items-center justify-center h-full bg-muted">
-                    <p>No PDF available for this lecture.</p>
+              {selectedLecture.pdfUrl ? (
+                <>
+                  <Button asChild variant="outline" className="mb-3">
+                    <a href={selectedLecture.pdfUrl} target="_blank" rel="noopener noreferrer">
+                      <Download className="mr-2 h-4 w-4" />
+                      Download PDF
+                    </a>
+                  </Button>
+                  <div className="aspect-[4/3] rounded-md overflow-hidden border border-border shadow-inner">
+                    <iframe
+                      src={selectedLecture.pdfUrl}
+                      width="100%"
+                      height="100%"
+                      title={`${selectedLecture.name} PDF Viewer`}
+                    >
+                      Your browser does not support PDFs. Please download the PDF to view it.
+                    </iframe>
                   </div>
-                )}
-              </div>
+                </>
+              ) : (
+                <div className="flex items-center justify-center h-full bg-muted p-4 rounded-md">
+                  <p>No PDF available for this lecture.</p>
+                </div>
+              )}
             </AccordionContent>
           </AccordionItem>
         </Accordion>
