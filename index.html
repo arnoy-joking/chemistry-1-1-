@@ -1,112 +1,137 @@
-
 <!DOCTYPE html>
 <html lang="en">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>ChemPrep HQ</title>
-    <link rel="stylesheet" href="css/style.css">
-    <!-- Using Geist font via CDN for simplicity in static setup -->
-    <link rel="preconnect" href="https://fonts.googleapis.com">
-    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Geist:wght@400;500;700&family=Geist+Mono&display=swap" rel="stylesheet">
+    <title>Chemistry Class Portal</title>
+    <link rel="stylesheet" href="styles.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css">
+    <meta name="description" content="Online learning platform for Chemistry 1st Paper - HSC 2026 with video lessons and downloadable materials">
 </head>
 <body>
-    <div class="container">
-        <!-- Sidebar (Desktop: Right, Mobile: Off-canvas drawer) -->
-        <aside class="sidebar" id="sidebar">
-            <div class="sidebar-header">
-                 <a href="/" aria-label="ChemPrep HQ Home" style="text-decoration: none; color: inherit;">
-                    <h1>
-                        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 200 50" width="120" height="30" aria-label="ChemPrep HQ Logo">
-                            <rect width="200" height="50" rx="5" fill="transparent"/>
-                            <text x="10" y="35" font-family="var(--font-sans), Arial, sans-serif" font-size="28" font-weight="bold" fill="hsl(var(--sidebar-foreground-hsl))">
-                                ChemPrep<tspan class="hq-text" fill="hsl(var(--sidebar-primary-hsl))"> HQ</tspan>
-                            </text>
-                        </svg>
-                    </h1>
-                </a>
-                <button class="sidebar-toggle-desktop" id="sidebar-toggle-desktop" aria-label="Toggle Sidebar">
-                    ☰
+    <header class="site-header">
+        <div class="container">
+            <div class="logo-area">
+                <img src="https://bondipathshala.com.bd/files/logo.png" alt="Bondi Pathshala Logo" class="logo">
+                <h1 class="site-title"><span class="highlight">Chemistry</span> 1st Paper - HSC 2026</h1>
+            </div>
+            <div class="user-area">
+                <div class="user-info">
+                    <i class="fas fa-user-graduate"></i>
+                    <span>Student</span>
+                </div>
+                <button class="logout-btn">
+                    <i class="fas fa-sign-out-alt"></i>
+                    <span>Logout</span>
                 </button>
             </div>
-            <nav id="class-list-desktop" aria-label="Class navigation"></nav>
-            <div style="margin-top: auto; padding-top: 1rem;">
-                 <a href="https://github.com/firebase/genkit/tree/main/studio" target="_blank" rel="noopener noreferrer" class="github-link">
-                    <svg viewBox="0 0 16 16" fill="currentColor" aria-hidden="true"><path d="M8 0c4.42 0 8 3.58 8 8a8.013 8.013 0 0 1-5.45 7.59c-.4.08-.55-.17-.55-.38 0-.19.01-.82.01-1.49-2.01.37-2.53-.49-2.69-.94-.09-.23-.48-.94-.82-1.13-.28-.15-.68-.52-.01-.53.63-.01 1.08.58 1.23.82.72 1.21 1.87.87 2.33.66.07-.52.28-.87.51-1.07-1.78-.2-3.64-.89-3.64-3.95 0-.87.31-1.59.82-2.15-.08-.2-.36-1.02.08-2.12 0 0 .67-.21 2.2.82.64-.18 1.32-.27 2-.27.68 0 1.36.09 2 .27 1.53-1.04 2.2-.82 2.2-.82.44 1.1.16 1.92.08 2.12.51.56.82 1.27.82 2.15 0 3.07-1.87 3.75-3.65 3.95.29.25.54.73.54 1.48 0 1.07-.01 1.93-.01 2.2 0 .21-.15.46-.55.38A8.013 8.013 0 0 1 0 8c0-4.42 3.58-8 8-8Z"></path></svg>
-                    <span>View on GitHub</span>
-                </a>
-            </div>
-        </aside>
-
-        <!-- Main Content -->
-        <main class="main-content" id="main-content">
-            <header class="mobile-header">
-                 <a href="/" aria-label="ChemPrep HQ Home" style="text-decoration: none; color: inherit;">
-                     <h1>
-                        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 200 50" width="120" height="30" aria-label="ChemPrep HQ Logo">
-                            <rect width="200" height="50" rx="5" fill="transparent"/>
-                            <text x="10" y="35" font-family="var(--font-sans), Arial, sans-serif" font-size="28" font-weight="bold" fill="hsl(var(--sidebar-foreground-hsl))">
-                                ChemPrep<tspan class="hq-text" fill="hsl(var(--sidebar-primary-hsl))"> HQ</tspan>
-                            </text>
-                        </svg>
-                    </h1>
-                </a>
-                <button class="mobile-sidebar-toggle" id="mobile-sidebar-toggle" aria-label="Toggle Sidebar Menu">☰</button>
-            </header>
-
-            <section id="lecture-viewer" class="card" aria-labelledby="lecture-title">
-                <div id="lecture-viewer-content">
-                    <!-- Lecture content will be loaded here -->
-                     <div class="placeholder-text">
-                        <img src="https://picsum.photos/seed/chemistry/400/300" alt="Chemistry lab" data-ai-hint="chemistry lab">
-                        <p>Welcome to ChemPrep HQ</p>
-                        <p class="muted">Select a class and lecture from the sidebar to begin.</p>
+        </div>
+    </header>
+    
+    <main class="container main-content">
+        <div class="video-container">
+            <div class="video-card">
+                <div class="video-header">
+                    <h2 class="video-title">
+                        <i class="fas fa-play-circle"></i>
+                        <span id="current-video-title">Loading...</span>
+                    </h2>
+                    <div class="video-meta">
+                        <span class="label live">LIVE</span>
+                        <span class="label duration" id="current-video-duration">00:00</span>
                     </div>
                 </div>
-            </section>
-            
-            <section id="study-tool-accordion" class="card">
-                <button class="accordion-trigger" aria-expanded="false" aria-controls="study-tool-content" id="study-tool-trigger">
-                    <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 3c.3 0 .6.1.8.4l6.8 6.8c.2.2.4.5.4.8s-.1.6-.4.8l-6.8 6.8c-.2.2-.5.4-.8.4s-.6-.1-.8-.4l-6.8-6.8c-.2-.2-.4-.5-.4-.8s.1-.6.4-.8l6.8-6.8c.2-.3.5-.4.8-.4z"/><path d="m20.8 12-6.8-6.8"/><path d="m3.2 12 6.8 6.8"/></svg>
-                    AI Study Assistant
-                    <span class="chevron" aria-hidden="true">▶</span>
-                </button>
-                <div id="study-tool-content" class="accordion-content" hidden>
-                    <div class="card-header">
-                        <h2 class="card-title">Personalized Study Plan</h2>
-                        <p class="card-description" id="study-tool-description">Select a lecture to generate a study plan.</p>
+                
+                <div class="video-player-container">
+                    <!-- Video thumbnail display (initial state) -->
+                    <div id="video-thumbnail-container" class="video-thumbnail">
+                        <img id="video-thumbnail" src="" alt="Video thumbnail" class="thumbnail-img">
+                        <div class="play-button-overlay">
+                            <div class="play-button">
+                                <i class="fas fa-play"></i>
+                            </div>
+                            <p class="click-to-play">Click to play video</p>
+                        </div>
                     </div>
-                    <button id="generate-study-plan-btn" class="button" disabled>
-                        <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 3c.3 0 .6.1.8.4l6.8 6.8c.2.2.4.5.4.8s-.1.6-.4.8l-6.8 6.8c-.2.2-.5.4-.8.4s-.6-.1-.8-.4l-6.8-6.8c-.2-.2-.4-.5-.4-.8s.1-.6.4-.8l6.8-6.8c.2-.3.5-.4.8-.4z"/><path d="m20.8 12-6.8-6.8"/><path d="m3.2 12 6.8 6.8"/></svg>
-                        Generate Study Plan
+                    
+                    <!-- YouTube embed (initially hidden) -->
+                    <div id="youtube-embed-container" class="youtube-embed hidden">
+                        <iframe id="youtube-iframe" 
+                            frameborder="0" 
+                            allowfullscreen
+                            loading="lazy"
+                            title="Class video">
+                        </iframe>
+                    </div>
+                </div>
+                
+                <div class="video-actions">
+                    <button id="download-pdf-btn" class="action-btn download-btn">
+                        <i class="fas fa-file-pdf"></i>
+                        <span>Download PDF</span>
                     </button>
-                    <div id="study-plan-error" class="alert error" role="alert" hidden></div>
-                    <div id="study-plan-result" hidden>
-                        <!-- AI-generated study plan will appear here -->
+                    <button id="open-youtube-btn" class="action-btn youtube-btn">
+                        <i class="fab fa-youtube"></i>
+                        <span>Open on YouTube</span>
+                    </button>
+                </div>
+            </div>
+        </div>
+        
+        <div class="class-list-container">
+            <div class="class-list-card">
+                <div class="class-list-header">
+                    <h2 class="list-title">
+                        <i class="fas fa-list-ul"></i>
+                        Class List
+                    </h2>
+                    <div class="list-actions">
+                        <button class="icon-btn filter-btn">
+                            <i class="fas fa-filter"></i>
+                        </button>
+                        <button class="icon-btn search-btn">
+                            <i class="fas fa-search"></i>
+                        </button>
                     </div>
-                    <p style="margin-top: 1rem; font-size: 0.9em; color: var(--muted-foreground);">Note: AI features are for demonstration purposes in this static version and will show placeholder content.</p>
                 </div>
-            </section>
-
-            <section id="class-list-mobile-accordion" class="card">
-                 <button class="accordion-trigger" aria-expanded="false" aria-controls="class-list-mobile-content" id="mobile-class-list-trigger">
-                    <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M8 6h13"/><path d="M8 12h13"/><path d="M8 18h13"/><path d="M3 6h.01"/><path d="M3 12h.01"/><path d="M3 18h.01"/></svg>
-                    Class List
-                    <span class="chevron" aria-hidden="true">▶</span>
-                </button>
-                <div id="class-list-mobile-content" class="accordion-content" hidden>
-                    <nav id="class-list-mobile" aria-label="Class navigation"></nav>
+                
+                <div class="category-filters">
+                    <div class="filter-scroll">
+                        <!-- Categories will be dynamically inserted here -->
+                    </div>
                 </div>
-            </section>
-            
-            <footer>
-                <p>© <span id="current-year"></span> ChemPrep HQ. All rights reserved.</p>
-            </footer>
-        </main>
-    </div>
-
-    <script src="js/data.js"></script>
-    <script src="js/script.js"></script>
+                
+                <ul id="class-list" class="class-items">
+                    <!-- Class items will be dynamically inserted here -->
+                </ul>
+            </div>
+        </div>
+    </main>
+    
+    <footer class="site-footer">
+        <div class="container">
+            <div class="footer-content">
+                <div class="footer-logo">
+                    <img src="https://bondipathshala.com.bd/files/logo.png" alt="Bondi Pathshala Logo" class="logo">
+                    <p>Empowering students with quality education since 2015</p>
+                </div>
+                <div class="footer-quote">
+                    <p>"The scientist is not a person who gives the right answers, but one who asks the right questions."</p>
+                    <p class="quote-author">- Claude Lévi-Strauss</p>
+                </div>
+                <div class="footer-social">
+                    <a href="#" class="social-link"><i class="fab fa-facebook-f"></i></a>
+                    <a href="#" class="social-link"><i class="fab fa-youtube"></i></a>
+                    <a href="#" class="social-link"><i class="fab fa-instagram"></i></a>
+                </div>
+            </div>
+            <div class="footer-copyright">
+                &copy; <span id="current-year"></span> Bondi Pathshala. All rights reserved.
+            </div>
+        </div>
+    </footer>
+    
+    <script src="classData.js"></script>
+    <script src="app.js"></script>
 </body>
 </html>
